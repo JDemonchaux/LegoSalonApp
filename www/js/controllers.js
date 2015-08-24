@@ -1,86 +1,49 @@
 var ws = "http://192.168.0.12:8080/";
+var socket = io("http://192.168.0.17:3000");
+
 angular.module('starter.controllers', [])
 
-    .controller('HomeCtrl', function ($scope, $http, $interval) {
-        // Récupération de la date
-        $scope.updateDate = function(){
-            $http.get(ws + "getDate").then(function (resp) {
-                $scope.date = resp.data;
+    // CONTROLLER HOME
+    .controller('HomeCtrl', function ($scope, $rootScope) {
+        $scope.nombre;
+        socket.on("countVisiteur", function (msg) {
+            $rootScope.$apply(function () {
+                $scope.nombre = msg + " Visiteurs";
             });
-        };
-
-
-
-        // On recup une première fois le nombre de visiteur
-        $http.get(ws + "countVisiteur").then(function (resp) {
-            $scope.nombreGens = resp.data.nombre;
         });
-        // On définit le timer qui va checker toute les x millisecondes
-        $scope.refreshNBVisitor = $interval(function () {
-            $http.get(ws + "countVisiteur").then(function (resp) {
-                $scope.nombreGens = resp.data.nombre;
-            })
-        }, 10000);
 
-        // Refresh des datas
-        $scope.$on('$ionicView.enter', function (e) {
-            $scope.refreshNBVisitor();
-            // Récupération de la date
-            $scope.updateDate();
-        });
     })
-    .controller('EntreeCtrl', function ($scope, $http, $interval) {
+
+    // CONTROLLER ENTREE
+    .controller('EntreeCtrl', function ($scope, $rootScope) {
         $scope.titre = "Gestion des entrees";
-        $scope.addVisiteur = function (number) {
-            $http.get(ws + "addVisiteur/" + number).then(function (resp) {
-                // On refresh le nombre de visiteur
-                $http.get(ws + "countVisiteur").then(function (resp) {
-                    $scope.nombreGens = resp.data.nombre;
-                })
-            })
+        $scope.nombre;
+
+        $scope.addVisiteur = function (nb) {
+            socket.emit('addVisiteur', nb);
         };
 
-
-        // On recup une première fois le nombre de visiteur
-        $http.get(ws + "countVisiteur").then(function (resp) {
-            $scope.nombreGens = resp.data.nombre;
-        });
-        // On définit le timer qui va checker toute les x millisecondes
-        $scope.refreshNBVisitor = $interval(function () {
-            $http.get(ws + "countVisiteur").then(function (resp) {
-                $scope.nombreGens = resp.data.nombre;
-            })
-        }, 10000);
-        // Refresh des datas
-        $scope.$on('$ionicView.enter', function (e) {
-            $scope.refreshNBVisitor();
+        socket.on("countVisiteur", function msg(msg) {
+            $rootScope.$apply(function () {
+                $scope.nombre = msg + " Visiteurs";
+            });
         });
     })
-    .controller('SortieCtrl', function ($scope, $http, $interval) {
-        $scope.titre = "Gestion des sorties"
-        $scope.removeVisiteur = function (number) {
-            $http.get(ws + "removeVisiteur/" + number).then(function (resp) {
-                // On refresh le nombre de visiteur
-                $http.get(ws + "countVisiteur").then(function (resp) {
-                    $scope.nombreGens = resp.data.nombre;
-                })
-            })
+
+    // CONTROLLER SORTIE
+    .controller('SortieCtrl', function ($scope, $rootScope) {
+        $scope.titre = "Gestion des sorties";
+        $scope.nombre;
+
+        $scope.removeVisiteur = function (nb) {
+            socket.emit('removeVisiteur', nb);
         };
 
-        // On recup une première fois le nombre de visiteur
-        $http.get(ws + "countVisiteur").then(function (resp) {
-            $scope.nombreGens = resp.data.nombre;
-        });
-        // On définit le timer qui va checker toute les x millisecondes
-        $scope.refreshNBVisitor = $interval(function () {
-            $http.get(ws + "countVisiteur").then(function (resp) {
-                $scope.nombreGens = resp.data.nombre;
-            })
-        }, 10000);
-        // Refresh des datas
-        $scope.$on('$ionicView.enter', function (e) {
-            $scope.refreshNBVisitor();
-        });
+        socket.on("countVisiteur", function (msg) {
+            $rootScope.$apply(function () {
+                $scope.nombre = msg + " Visiteurs";
+            });
+        })
     })
     //.controller('ChatsCtrl', function ($scope, Chats) {
     //    // With the new view caching in Ionic, Controllers are only called
