@@ -8,12 +8,12 @@ Db = mongo.Db,
 BSON = mongo.BSONPure;
 
 //Connection au serveur hebergeant mongo sur le port par defaut
-var server = new Server('127.0.0.1', 27017, {auto_reconnect: true});
+var server = new Server('192.168.0.12', 27017, {auto_reconnect: true});
 process.env.TZ = 'Europe/Amsterdam'
 //Connection a la BDD de production
 db = new Db('wslego', server);
 
-//Connection à la collection "collection" 
+//Connection à la collection "collection"
 db.open(function(err, db) {
 	if(!err) {
 		console.log("Connecté a wslego");
@@ -25,14 +25,8 @@ db.open(function(err, db) {
 	}
 });
 
-exports.getTime = function(req, res) {
-	var date = format.asString('dd/MM/yy hh:mm', new Date());
 
-	res.send(date);
-	res.end();
-}
-
-exports.addVisiteur = function(req, res) {
+exports.addVisiteur = function(req) {
 	var d = new Date(/*"July 02, 2015 11:13:00"*/);
 	year = d.getFullYear();
 	month = d.getMonth();
@@ -42,18 +36,15 @@ exports.addVisiteur = function(req, res) {
 	var document = {
 		date:dateNow,
 		sens:"IN",
-		nombre:req.params.nombre
+		nombre:req
 	}
 
 	db.collection('log_visite').insert(document, {w: 1}, function(err, records){
-		console.log(req.params.nombre + " IN");
+		console.log(req + " IN");
 	});
-
-	res.send(req.params.nombre + " pelo(s) en entree");
-	res.end();
 }
 
-exports.removeVisiteur = function(req, res) {
+exports.removeVisiteur = function(req) {
 	var d = new Date(/*"July 02, 2015 11:13:00"*/);
 	year = d.getFullYear();
 	month = d.getMonth();
@@ -63,18 +54,15 @@ exports.removeVisiteur = function(req, res) {
 	var document = {
 		date:dateNow,
 		sens:"OUT",
-		nombre:req.params.nombre
+		nombre:req
 	}
 
 	db.collection('log_visite').insert(document, {w: 1}, function(err, records){
-		console.log(req.params.nombre + " OUT");
+		console.log(req + " OUT");
 	});
-
-	res.send(req.params.nombre + " pelo(s) en sortie");
-	res.end();
 }
 
-exports.countVisiteur = function(req, res) {
+exports.countVisiteur = function(callback) {
 	var d = new Date(/*"July 02, 2015 11:13:00"*/);
 	year = d.getFullYear();
 	month = d.getMonth();
@@ -85,23 +73,19 @@ exports.countVisiteur = function(req, res) {
 	var total = {nombre:0};
 
 	db.collection('log_visite').find({ date:new Date(dateNow.toISOString())}).toArray(function(err, docs) {
-		console.log(docs);
+		//console.log(docs);
 		for (var i = docs.length - 1; i >= 0; i--) {
-			
+
 			if (docs[i] != null) {
 				if (docs[i]['sens'] == "IN") {
 					total.nombre += Number(docs[i]['nombre']);
-					console.log(total);
+					//console.log(total);
 				} else if (docs[i]['sens'] == "OUT") {
 					total.nombre -= Number(docs[i]['nombre']);
-					console.log(total);
+					//console.log(total);
 				}
 			}
 		}
-		res.send(total);
-		res.end();		
+		callback(total.nombre);
 	});
-
-	
-	
 };
