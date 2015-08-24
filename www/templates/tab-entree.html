@@ -1,0 +1,56 @@
+<ion-view view-title="Entree">
+    <ion-content>
+        <div class="content">
+            <div class="row">
+                <div class="bar bar-header bar-balanced">
+                    <h1 class="title">
+                        {{titre}}
+                    </h1>
+                </div>
+            </div>
+            <br/><br/><br />
+            <div class="row">
+                <div class="card col col-100">
+                    <div class="item item-text-wrap">
+                    <span ng-if="nombreGens < 20"
+                          class="button-assertive">{{nombreGens}} visiteur(s) dans le salon.</span>
+                    <span ng-if="nombreGens > 20"
+                          class="button-positive">{{nombreGens}} visiteur(s) dans le salon.</span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-balanced" ng-click="addVisiteur(1)">
+                        +1
+                    </button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-balanced" ng-click="addVisiteur(2)">
+                        +2
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-balanced" ng-click="addVisiteur(3)">
+                        +3
+                    </button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-balanced" ng-click="addVisiteur(4)">
+                        +4
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-100">
+                    <button class="button button-block button-balanced" ng-click="addVisiteur(5)">
+                        +5
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

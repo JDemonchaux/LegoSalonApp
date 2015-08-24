@@ -1,0 +1,30 @@
+<ion-view view-title="Home">
+    <ion-content class="padding">
+        <div class="row">
+            <div class="bar bar-header bar-calm">
+                <h1 class="title">
+                    {{date | date:'dd/MM/yyyy HH:mm'}}
+                </h1>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+
+            <div class="card col col-100">
+                <div class="item item-text-wrap">
+                    <span ng-if="nombreGens < 20"
+                          class="button-assertive">{{nombreGens}} visiteur(s) dans le salon.</span>
+                    <span ng-if="nombreGens > 20"
+                          class="button-positive">{{nombreGens}} visiteur(s) dans le salon.</span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col col-100">
+                <img src="img/lego.jpg">
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>
