@@ -61,6 +61,17 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
                     }
                 }
             })
+
+            .state('tab.conf', {
+                url: '/conf',
+                views: {
+                    'tab-conf': {
+                        templateUrl: 'templates/tab-conf.html',
+                        controller: 'ConfCtrl'
+                    }
+                }
+            })
+
             .state('tab.chats', {
                 url: '/chats',
                 views: {
