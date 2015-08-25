@@ -1,5 +1,5 @@
 var ws = "http://192.168.0.12:8080/";
-var socket = io("http://192.168.0.17:3000");
+var socket = io("http://192.168.0.12:3000", {autoConnect: true});
 
 angular.module('starter.controllers', [])
 
@@ -48,9 +48,18 @@ angular.module('starter.controllers', [])
 
     // CONTROLLER CONF
     .controller('ConfCtrl', function($scope) {
-        $scope.connectTo = function(server) {
-            socket = io("http://" + server + ":3000");
+        $scope.serveur = {ip: ""};
+        $scope.connectTo = function() {
+            socket.disconnect();
+
+
         }
+
+        socket.on('disconnect', function() {
+
+            $scope.ip = "http://" + $scope.serveur.ip + ":3000";
+            socket = io($scope.ip);
+        })
     })
 
     //.controller('ChatsCtrl', function ($scope, Chats) {

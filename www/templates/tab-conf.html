@@ -10,12 +10,12 @@
         <br/><br/>
 
         <div class="row">
-            <form name="authorizationForm" novalidate="" ng-submit="connectTo(server)" class="col col-100">
+            <form name="serverForm" novalidate="" ng-submit="connectTo(server)" class="col col-100">
 
                 <div class="list col col-100">
-                    <div >
+                    <div>
                         <label class="item item-input">
-                            <input type="text" placeholder="Adresse IP du serveur" />
+                            <input type="tel" name="ip" placeholder="Adresse IP du serveur" ng-model="serveur.ip"/>
                         </label>
 
                     </div>
@@ -24,7 +24,6 @@
                 <button class="button button-full button-positive" type="submit">
                     Connexion
                 </button>
-
             </form>
         </div>
 
