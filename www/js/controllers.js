@@ -1,17 +1,26 @@
-var ws = "http://192.168.0.12:8080/";
-var socket = io("http://192.168.0.12:3000", {autoConnect: true});
 
+
+var socket = io("http://127.0.0.1");
+try {
+    socket = io("http://1654654654654:3000", {reconnect: false});
+}
+catch (err) {
+}
 angular.module('starter.controllers', [])
 
     // CONTROLLER HOME
     .controller('HomeCtrl', function ($scope, $rootScope) {
-        $scope.nombre;
+        $scope.nombre = "";
+        $scope.error = "";
         socket.on("countVisiteur", function (msg) {
             $rootScope.$apply(function () {
                 $scope.nombre = msg + " Visiteurs";
             });
         });
 
+        if (socket == "") {
+            $scope.error = "Impossible de contacter le serveur!";
+        };
     })
 
     // CONTROLLER ENTREE
@@ -52,14 +61,16 @@ angular.module('starter.controllers', [])
         $scope.connectTo = function() {
             socket.disconnect();
 
-
-        }
-
-        socket.on('disconnect', function() {
-
             $scope.ip = "http://" + $scope.serveur.ip + ":3000";
             socket = io($scope.ip);
-        })
+
+
+        };
+
+        socket.on('disconnect', function() {
+            $scope.ip = "http://" + $scope.serveur.ip + ":3000";
+            socket = io($scope.ip);
+        });
     })
 
     //.controller('ChatsCtrl', function ($scope, Chats) {
