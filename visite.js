@@ -8,7 +8,7 @@ Db = mongo.Db,
 BSON = mongo.BSONPure;
 
 //Connection au serveur hebergeant mongo sur le port par defaut
-var server = new Server('192.168.0.12', 27017, {auto_reconnect: true});
+var server = new Server('127.0.0.1', 27017, {auto_reconnect: true});
 process.env.TZ = 'Europe/Amsterdam'
 //Connection a la BDD de production
 db = new Db('wslego', server);

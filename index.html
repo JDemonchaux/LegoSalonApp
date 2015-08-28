@@ -3,20 +3,115 @@
   <head>
     <title>Lego gens</title>
     <style>
-
+    .square {
+        float:left;
+        position: relative;
+        width: 4%;
+        padding-bottom : 4%; /* = width for a 1:1 aspect ratio */
+        /*margin:1.66%;*/
+        overflow:hidden;
+    }
+    .bg{
+      background-position:center center;
+      background-repeat:no-repeat;
+      background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+      color:#fff;
+    }
+    .img0{
+      background-image: url('/public/0.png');
+    }
+    .img1{
+      background-image: url('/public/1.png');
+    }
+    .img2{
+      background-image: url('/public/2.png');
+    }
+    .img3{
+      background-image: url('/public/3.png');
+    }
+    .img4{
+      background-image: url('/public/4.png');
+    }
+    .img5{
+      background-image: url('/public/5.png');
+    }
     </style>
   </head>
   <body>
-    <h1>Lego</h1>
-    <h1 id="count"></h1>
+    <div id="mastersquare">
+
+    </div>
+
+    <div id="countmidle" class="countmidle">
+      9999
+    </div>
+
+<style type="text/css">
+  .countmidle {
+    width:700px;
+    height:300px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin:-150px 0 0 -350px; /* [-(height/2)px 0 0 -(width/2)px] */
+    background-color: black;
+    color: white;
+    font-size: 140px;
+    text-align: center;
+  }
+  #temp{
+    color: red;
+    font-size: 50px;
+  }
+</style>
+
   </body>
+  <script src="/public/jquery-1.11.3.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/jquery"></script>
   <script>
-  var socket = io("http://192.168.0.17:3000/");
+  var socket = io("http://127.0.0.1:3000/");
   socket.on('countVisiteur', function(msg){
-    $('#count').text(msg);
+    displayCount(msg);
     console.log(msg);
   });
+  </script>
+  <script>
+
+
+  function displayCount(n){
+    date = new Date();
+    $('#countmidle').html(n+'<p id="temp">'+date.getHours()+"H "+date.getMinutes()+"M "+date.getSeconds()+"S</p>");
+    $('#mastersquare').html("");
+    n=n+5
+    for (line = 0; line < 17; line++) {
+      console.log(line);
+      for (colum = 0; colum < 17; colum++) {
+        console.log(colum);
+        n=n-5;
+        if (n>=5) {
+          stringdiv('5');
+        }
+        if (n==4) {
+          stringdiv('4');
+        }
+        if (n==3) {
+          stringdiv('3');
+        }
+        if (n==2) {
+          stringdiv('2');
+        }
+        if (n==1) {
+          stringdiv('1');
+        }
+        if (n<1) {
+          stringdiv('0');
+        }
+      }
+    }
+  }
+
+  function stringdiv(s){
+    $('<div class="square bg img'+s+'"></div>').appendTo('#mastersquare');
+  }
   </script>
 </html>
