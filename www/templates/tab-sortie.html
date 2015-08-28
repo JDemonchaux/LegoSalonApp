@@ -1,0 +1,57 @@
+<ion-view view-title="Sortie">
+    <ion-content>
+        <div class="content">
+            <div class="row">
+                <div class="bar bar-header bar-assertive">
+                    <h1 class="title">
+                        {{titre}}
+                    </h1>
+                </div>
+            </div>
+            <br/><br/><br/>
+
+            <div class="row">
+                <div class="card col col-100">
+                    <div class="item item-text-wrap center">
+                        <span class="button-assertive">{{nombre}}</span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="removeVisiteur(1)">
+                        -1
+                    </button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="removeVisiteur(2)">
+                        -2
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="removeVisiteur(3)">
+                        -3
+                    </button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="removeVisiteur(4)">
+                        -4
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-100">
+                    <button class="button button-block button-assertive" ng-click="removeVisiteur(5)">
+                        -5
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

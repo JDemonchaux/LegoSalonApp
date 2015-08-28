@@ -1,0 +1,14 @@
+/* Empty. Add your own CSS if you like */
+img {
+    width:100%;
+}
+
+.center {
+    text-align: center;
+}
+
+.error {
+    font-size:24px;
+    color:red;
+    font-weight: bold;
+}

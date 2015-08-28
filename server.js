@@ -9,6 +9,7 @@ app.get('/', function(req, res){
 });
 
 app.use('/public', express.static(__dirname + '/public'));
+app.use('/app', express.static(__dirname + '/www'));
 
 app.get('/jquery', function(req, res){
   res.sendFile(__dirname + '/jquery-1.11.3.min.js');

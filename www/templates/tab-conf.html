@@ -1,0 +1,31 @@
+<ion-view view-title="Parametres">
+    <ion-content class="padding">
+        <div class="row">
+            <div class="bar bar-header bar-calm">
+                <h1 class="title">
+                    Configuration du serveur
+                </h1>
+            </div>
+        </div>
+        <br/><br/>
+
+        <div class="row">
+            <form name="serverForm" novalidate="" ng-submit="connectTo(server)" class="col col-100">
+
+                <div class="list col col-100">
+                    <div>
+                        <label class="item item-input">
+                            <input type="tel" name="ip" placeholder="Adresse IP du serveur" ng-model="serveur.ip"/>
+                        </label>
+
+                    </div>
+                </div>
+
+                <button class="button button-full button-positive" type="submit">
+                    Connexion
+                </button>
+            </form>
+        </div>
+
+    </ion-content>
+</ion-view>
