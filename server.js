@@ -4,12 +4,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var visite = require('./visite');
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
-
 app.use('/public', express.static(__dirname + '/public'));
-app.use('/app', express.static(__dirname + '/www'));
+app.use('/', express.static(__dirname + '/www'));
 
 app.get('/jquery', function(req, res){
   res.sendFile(__dirname + '/jquery-1.11.3.min.js');
@@ -37,7 +33,6 @@ io.on('connection', function(socket){
       socket.broadcast.emit("countVisiteur", callback);
       socket.emit("countVisiteur", callback);
     });
-
   });
 
   socket.on('removeVisiteur', function(msg){
